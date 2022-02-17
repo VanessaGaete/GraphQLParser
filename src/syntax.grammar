@@ -2,25 +2,35 @@
 
 @skip { space | LineComment }
 
+
+
 expression {
-  Identifier |
+  Type |
   String |
-  Boolean |
-  Application { "(" expression* ")" }
+  Attr |
+  Keyword |
+  Application { expression "{" expression* "}" }
+  Init { Query "{" expression* "}" }
 }
 
 @tokens {
-  Identifier { $[a-zA-Z_\-0-9]+ }
+  Query {"query"}
 
-  String { '"' (!["\\] | "\\" _)* '"' }
+  Type { $[A-Z] $[a-zA-Z_0-9]* }
 
-  Boolean { "#t" | "#f" }
+  String { '"' !["\\]* '"' }
 
-  LineComment { ";" ![\n]* }
+  Attr { $[a-z] $[a-zA-Z_0-9]* } 
+
+  Keyword { "... on"  }  
+
+  LineComment { "#" ![\n]* }
 
   space { $[ \t\n\r]+ }
 
-  "(" ")"
+  "{" "}"
+
+  
 }
 
 @detectDelim
