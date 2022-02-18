@@ -1,7 +1,7 @@
 {
   "name": "@codemirror/lang-lva-graphiQL",
   "version": "0.1.0",
-  "description": "graphiQL language support for LVA API Valorization",
+  "description": "graphiQL language support for LVA API Valuation",
   "scripts": {
     "test": "mocha test/test.js",
     "prepare": "rollup -c"
