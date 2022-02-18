@@ -9,13 +9,15 @@ FIInstrument
 Program(Type, Type)
 
 # Attr
-
 nemo
 maturityDate
+querySmth
+__typename
+
 
 ==>
 
-Program(Attr, Attr)
+Program(Attr, Attr, Attr, Attr)
 
 # String
 
@@ -26,22 +28,51 @@ Program(Attr, Attr)
 
 Program(String, String)
 
-# Keyword
+# Param
 
-... on
+nemo:
+initDate:
+endDate: 
 
 ==>
 
-Program(Keyword)
+Program(Param, Param, Param)
+
+# Keyword
+
+... on
+query
+
+==>
+
+Program(Keyword, Keyword)
 
 
-#Init
+# Function
+
+fiInstrument(nemo: "BCP0600322", initDate: "2020-02-19") 
+
+==>
+
+Program(Function(Attr, Param, String, Param, String))
+
+
+#Application
 
 query {
-  nemo
+  fiInstrument(nemo: "BCP0600322", initDate: "2020-02-19") {
+    __typename
+    ... on CorporateBond{
+      nemo
+      currency
+      maturityDate
+    }
+  }
 }
 
 ==>
 
-Program(Application(Query, Attr))
-
+Program(Application(Keyword, 
+                      Application(Function(Attr, Param, String, Param, String), 
+                                      Attr, Keyword, Application
+                                                  (Type, Attr,Attr, Attr))))

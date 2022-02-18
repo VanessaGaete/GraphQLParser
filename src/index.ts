@@ -2,7 +2,7 @@ import {parser} from "./syntax.grammar"
 import {LRLanguage, LanguageSupport, indentNodeProp, foldNodeProp, foldInside, delimitedIndent} from "@codemirror/language"
 import {styleTags, tags as t} from "@codemirror/highlight"
 
-export const EXAMPLELanguage = LRLanguage.define({
+export const graphiQLLanguage = LRLanguage.define({
     parser: parser.configure({
       props: [
         indentNodeProp.add({
@@ -16,7 +16,7 @@ export const EXAMPLELanguage = LRLanguage.define({
           Attr: t.variableName,
           String: t.string,
           Keyword: t.keyword,
-          Query: t.keyword,
+          Param: t.typeName, 
           LineComment: t.lineComment,
           "{ }": t.paren
         })
@@ -27,6 +27,6 @@ export const EXAMPLELanguage = LRLanguage.define({
     }
   })
   
-  export function EXAMPLE() {
-    return new LanguageSupport(EXAMPLELanguage)
+  export function grphiQL() {
+    return new LanguageSupport(graphiQLLanguage)
   }

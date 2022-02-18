@@ -8,22 +8,27 @@ expression {
   Type |
   String |
   Attr |
+  Param |
   Keyword |
-  Application { expression "{" expression* "}" }
-  Init { Query "{" expression* "}" }
+  Application { expression "{" expression* "}" } |
+  Function { Attr"(" (Param String",")* (Param String) ")" } 
 }
 
 @tokens {
-  Query {"query"}
 
   Type { $[A-Z] $[a-zA-Z_0-9]* }
 
   String { '"' !["\\]* '"' }
 
-  Attr { $[a-z] $[a-zA-Z_0-9]* } 
+  Keyword { "... on" | "query" }  
 
-  Keyword { "... on"  }  
+  Attr{ $[a-z] $[a-zA-Z_0-9]* | "__" $[a-z] $[a-zA-Z_0-9]*}
 
+  Param{ "nemo:" | "initDate:" | "endDate:" | "date:" }
+
+  @precedence {Keyword, Attr}
+  @precedence {Param, Attr}
+  
   LineComment { "#" ![\n]* }
 
   space { $[ \t\n\r]+ }
